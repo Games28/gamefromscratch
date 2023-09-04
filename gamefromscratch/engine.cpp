@@ -43,13 +43,12 @@ LRESULT GameEngine::WindowProc(HWND windowhandle, UINT Message, WPARAM wParam, L
 
 	case WM_CLOSE:
 	{
-		gamerunning = false;
+		PostQuitMessage(0);
 		
 	}break;
 
 	case WM_DESTROY:
 	{
-		gamerunning = false;
 		
 	}break;
 
@@ -80,6 +79,7 @@ bool GameEngine::gamealreadyrunning()
 
 void GameEngine::ProcessPlayerInput()
 {
+
 }
 
 
@@ -141,7 +141,13 @@ bool GameEngine::CreateMainWindow()
 
 void GameEngine::WindowEvent()
 {
-	
+	MSG message;
+	while (PeekMessage(&message, GameWindow, 0, 0, PM_REMOVE))
+	{
+
+		TranslateMessage(&message);
+		DispatchMessageA(&message);
+	}
 }
 
 bool GameEngine::Start()
@@ -158,19 +164,14 @@ bool GameEngine::Start()
 	
 	while (gamerunning)
 	{
-		MSG message;
-		while (PeekMessage(&message, NULL, 0, 0, PM_REMOVE))
-		{
-			if (message.message == WM_QUIT)
-			{
-				gamerunning = false;
-			}
-			TranslateMessage(&message);
-			DispatchMessageA(&message);
-		}
+		WindowEvent();
+		
 	
 	
 		ProcessPlayerInput();
+
+
+		Sleep(0);
 	
 	
 	}

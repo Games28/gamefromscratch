@@ -5,7 +5,7 @@
 int main()
 {
 	GameEngine demo;
-	if (demo.Construct({ 30,30 }, { 1280,800 }))
+	if (demo.Construct({ 100,100 }, { 1280,800 }))
 	{
 		demo.Start();
 	}
